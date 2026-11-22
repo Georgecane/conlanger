@@ -1,0 +1,21 @@
+{
+  "name": "conlanger",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A visual-first naturalistic conlang development environment for Obsidian.",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "check": "tsc --noEmit",
+    "build": "node esbuild.config.mjs production",
+    "test": "node --test"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.15.17",
+    "esbuild": "0.25.5",
+    "obsidian": "1.14.4",
+    "typescript": "^5.8.3"
+  }
+}

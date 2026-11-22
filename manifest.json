@@ -1,0 +1,8 @@
+{
+  "id": "conlanger",
+  "name": "Conlanger",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "Develop, document, analyze, and evolve naturalistic constructed languages directly in Obsidian.",
+  "isDesktopOnly": false
+}
