@@ -42,7 +42,8 @@ export default class ConlangerPlugin extends Plugin {
     const notePath = `${folderPath}/Language.md`;
     const content = buildLanguageNote(name, languageId, createdAt);
 
-    await this.app.vault.create(notePath, content);
+    const file = await this.app.vault.create(notePath, content);
+    await this.app.workspace.getLeaf(false).openFile(file);
     new Notice(`Created language: ${name}`);
   }
 }

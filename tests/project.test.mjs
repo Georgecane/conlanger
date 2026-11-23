@@ -71,6 +71,7 @@ test('plugin registers the language creation command and uses vault-native stora
   assert.ok(source.includes("id: 'create-language'"));
   assert.ok(source.includes('this.app.vault.createFolder'));
   assert.ok(source.includes('this.app.vault.create('));
+  assert.ok(source.includes('this.app.workspace.getLeaf(false).openFile(file)'));
   assert.ok(modal.includes("setTitle('Create a language')"));
   assert.ok(!source.includes('show-status'));
 });
