@@ -29,8 +29,8 @@ test('manifest uses a stable, directory-compatible plugin identity', () => {
 });
 
 test('manifest contains all required metadata in valid formats', () => {
-  assert.match(manifest.version, /^\\d+\\.\\d+\\.\\d+$/);
-  assert.match(manifest.minAppVersion, /^\\d+\\.\\d+\\.\\d+$/);
+  assert.match(manifest.version, /^\d+\.\d+\.\d+$/);
+  assert.match(manifest.minAppVersion, /^\d+\.\d+\.\d+$/);
   assert.ok(manifest.author.trim().length > 0);
   assert.ok(manifest.description.length > 0);
   assert.ok(manifest.description.length <= 250);
@@ -45,15 +45,17 @@ test('language names become safe, readable folder identifiers', () => {
 });
 
 test('language notes contain minimal versioned metadata and preserve names', () => {
-  const note = buildLanguageNote('A "New" Language', 'a-new-language', '2026-11-23T00:00:00.000Z');
+  const name = 'A "New" Language';
+  const note = buildLanguageNote(name, 'a-new-language', '2026-11-23T00:00:00.000Z');
 
-  assert.match(note, /^---\\n/);
-  assert.match(note, /conlanger_type: language/);
-  assert.match(note, /conlanger_schema: 1/);
-  assert.match(note, /name: "A \\"New\\" Language"/);
-  assert.match(note, /language_id: "a-new-language"/);
-  assert.match(note, /status: draft/);
-  assert.match(note, /# A "New" Language/);
+  assert.ok(note.startsWith('---\n'));
+  assert.ok(note.includes('conlanger_type: language'));
+  assert.ok(note.includes('conlanger_schema: 1'));
+  assert.ok(note.includes(`name: ${JSON.stringify(name)}`));
+  assert.ok(note.includes('language_id: "a-new-language"'));
+  assert.ok(note.includes('status: draft'));
+  assert.ok(note.includes(`# ${name}`));
+  assert.ok(note.endsWith('## Overview\n\n'));
 });
 
 test('plugin registers the language creation command and uses vault-native storage', async () => {
@@ -66,11 +68,11 @@ test('plugin registers the language creation command and uses vault-native stora
     'utf8'
   );
 
-  assert.match(source, /id: 'create-language'/);
-  assert.match(source, /this\\.app\\.vault\\.createFolder/);
-  assert.match(source, /this\\.app\\.vault\\.create\\(/);
-  assert.match(modal, /setTitle\\('Create a language'\\)/);
-  assert.doesNotMatch(source, /show-status/);
+  assert.ok(source.includes("id: 'create-language'"));
+  assert.ok(source.includes('this.app.vault.createFolder'));
+  assert.ok(source.includes('this.app.vault.create('));
+  assert.ok(modal.includes("setTitle('Create a language')"));
+  assert.ok(!source.includes('show-status'));
 });
 
 test('production bundle is generated', async () => {
