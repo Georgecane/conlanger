@@ -3,7 +3,7 @@ export function slugifyLanguageName(name: string): string {
     .normalize('NFKC')
     .trim()
     .toLowerCase()
-    .replace(/[^\p{L}\p{N}]+/gu, '-')
+    .replace(/[^\p{L}\p{M}\p{N}]+/gu, '-')
     .replace(/^-+|-+$/g, '');
 
   return slug || 'language';
